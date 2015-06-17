@@ -1,59 +1,26 @@
 $(document).ready(function() {
-	var owl = $('[data-item="slider"]');
-	$('[data-item="slider"]').owlCarousel({
-		loop:true,
-		margin:0,
-		nav:false,
-		dots:false,
-		items:1
-	});
-	
-	var to = $('.gallery-main-object img');
-	var tolink = $('.gallery-main-object .this');
-	var from = $('.gallery-object img');
-	from.click(function() {
-		var loc = $(this).attr("src");
-		to.attr("src",loc);
-		tolink.attr("href",loc);
-	});
-	
-	$('.navigation-slider .icon-left').click(function() {
-		owl.trigger('prev.owl.carousel');
-	});
-	$('.navigation-slider .icon-right').click(function() {
-		owl.trigger('next.owl.carousel');
-	});
-	$('[data-mask="phone"]').mask("+7 (999) 999-99-99");
-	
 	$('a.smooth').click(function(){
 		$('html, body').animate({
 			scrollTop: $( $.attr(this, 'href') ).offset().top -100
 		}, 500);
 		return false;
 	});
-	$(function(){
-	  $(document).click(function(event) {
-		if ($(event.target).closest('[data-item="offcanvas-menu"]').length) {
-			$('body').addClass('active');
-			$('a.my-offcanvas-trigger').addClass('active');
-			$('[data-item="offcanvas-menu"]').addClass('active');
+	$('[data-mask="phone"]').mask("+7 (999) 999-99-99");
+	
+	$('[data-form="send"]').ajaxForm(function() {
+		$('#call').modal('hide');
+		$('#thx').modal('show');
+	}); 
+	$('.timer').countdown({
+		//date: +(new Date) + 86400000 * 10,
+		date: "June 7, 2087 12:55:00",
+		render: function(data) {
+			$(this.el).html("<div class='hours'>" + this.leadingZeros(data.hours, 2) + " </div><div class='mins '>" + this.leadingZeros(data.min, 2) + " </div><div class='secs'>" + this.leadingZeros(data.sec, 2) + " </div>");
+		},
+		onEnd: function() {
+			this.update(+(new Date) + 86400000 * 10);
+			this.start();
 		}
-		else {
-			$('body').removeClass('active');
-			$('a.my-offcanvas-trigger').removeClass('active');
-			$('[data-item="offcanvas-menu"]').removeClass('active');
-		}
-		event.stopPropagation();
-	  });
-	});
-	$('a.my-offcanvas-trigger').click(function(event){
-		$('[data-item="offcanvas-menu"]').toggleClass('active');
-		$('body').toggleClass('active');
-		$(this).toggleClass('active');
-		event.stopPropagation();
-	});
-	$("input[type=file]").nicefileinput({
-		label : 'Прикрепить файл (до 20 Мб)'
 	});
 });
 
